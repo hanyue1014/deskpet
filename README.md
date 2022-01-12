@@ -13,5 +13,5 @@ I wanna be more preservative in terms of functionalities as this project also in
 ---
 ## Timeline
 - 12 Jan 2922: 
-  - got insipiration from this [Chinese Video](https://www.bilibili.com/video/BV1vu411S7ZN?p=2) (I am a native chinese speaker) it's basically the diary of a desktop pet ngl my heart hurt when I was reading it loll, this hardened my urge to try and make one my own.
+  - got insipiration from this [Chinese Video](https://www.bilibili.com/video/BV1vu411S7ZN?p=2) (I am a native chinese speaker) it's basically the diary of a desktop pet.NGL my heart hurt when I was reading it loll, this hardened my urge to try and make one my own.
   - setup development environment (will be using sdl2 and go for this) and project
