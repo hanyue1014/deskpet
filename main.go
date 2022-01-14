@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 
+	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
-	// "github.com/veandco/go-sdl2/img"
 )
 
 const (
@@ -20,6 +21,8 @@ func main() {
 	// quit sdl to prevent memory leak
 	defer sdl.Quit()
 
+	// slight note: can use sdl.WINDOW_ALWAYS_ON_TOP | sdl.WINDOW_BORDERLESS as flag
+
 	w, r, err := sdl.CreateWindowAndRenderer(windowWidth, windowHeight, sdl.WINDOW_ALWAYS_ON_TOP)
 	// close window and renderer properly
 	defer w.Destroy()
@@ -29,7 +32,16 @@ func main() {
 		panic(fmt.Sprintf("cannot initialise window or renderer %v", err))
 	}
 
-	time.Sleep(5 * time.Second)
-
 	// img.Init(img.INIT_PNG)
+	t, err := img.LoadTexture(r, "./res/paimon.png")
+	defer t.Destroy()
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "failed to load image: %v", err)
+	}
+
+	r.Clear()
+	r.Copy(t, nil, nil)
+	r.Present()
+	time.Sleep(5 * time.Second)
 }
