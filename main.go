@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	windowWidth  = 200
-	windowHeight = 200
+	windowWidth  = 400
+	windowHeight = 400
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 
 	// slight note: can use sdl.WINDOW_ALWAYS_ON_TOP | sdl.WINDOW_BORDERLESS as flag
 
-	w, r, err := sdl.CreateWindowAndRenderer(windowWidth, windowHeight, sdl.WINDOW_ALWAYS_ON_TOP)
+	w, r, err := sdl.CreateWindowAndRenderer(windowWidth, windowHeight, sdl.WINDOW_ALWAYS_ON_TOP|sdl.WINDOW_BORDERLESS)
 	// close window and renderer properly
 	defer w.Destroy()
 	defer r.Destroy()
@@ -31,6 +31,11 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("cannot initialise window or renderer %v", err))
 	}
+
+	// setting window to 0 opacity just makes the whole window not visible
+	// if err = w.SetWindowOpacity(0); err != nil {
+	// 	panic(fmt.Sprintf("Cannot set window to 0 opacity: %v", err))
+	// }
 
 	// img.Init(img.INIT_PNG)
 	t, err := img.LoadTexture(r, "./res/paimon.png")
@@ -40,8 +45,14 @@ func main() {
 		fmt.Fprintf(os.Stderr, "failed to load image: %v", err)
 	}
 
+	if err = r.SetDrawColor(255, 255, 255, 0); err != nil {
+		fmt.Printf("Cannot set renderer color: %v", err)
+	}
+
 	r.Clear()
-	r.Copy(t, nil, nil)
+	if err = r.Copy(t, nil, nil); err != nil {
+		fmt.Printf("Error copying texture: %v", err)
+	}
 	r.Present()
 	time.Sleep(5 * time.Second)
 }
